@@ -1,68 +1,92 @@
-Vision-Language Pre-Training with Triple Contrastive Learning
-This repository contains the code and instructions for the Vision-Language Pre-Training project using Triple Contrastive Learning. Below are the requirements, dataset details, and steps to set up and run the project.
-Requirements
-To execute the code, ensure the following are installed:
+# Vision-Language Pre-Training with Triple Contrastive Learning
 
-Python 3 environment
-Frameworks: pytorch, torchvision, torchaudio, cudatoolkit
-Additional libraries: transformers, timm, ruamel.yaml, einops
-For pre-training scripts, install Apex for mixed precision training
+This repository contains the implementation and setup instructions for **Vision-Language Pre-Training using Triple Contrastive Learning**, designed to enhance cross-modal representation learning using contrastive objectives between image, text, and joint embeddings.
 
-All required frameworks are listed in the requirements.txt file. Install them using:
+---
+
+## 🔧 Requirements
+
+Ensure the following are installed in your Python 3 environment:
+
+- Python 3.x
+- PyTorch, Torchvision, Torchaudio, CUDAToolkit
+- Additional libraries: 
+  - `transformers`
+  - `timm`
+  - `ruamel.yaml`
+  - `einops`
+- (Optional but recommended) NVIDIA Apex for mixed precision training
+
+Install dependencies via:
 pip install -r requirements.txt
 
 Pre-trained Models
-Download the following pre-trained models for parameter initialization:
+Download pre-trained models for initializing encoders:
 
-Image Encoder: clip-vit-base or swin-transformer-base
-Text Encoder: bert-base
+Image Encoder:
 
-Datasets
-The project uses the following datasets for pre-training and downstream tasks:
+clip-vit-base
+
+swin-transformer-base
+
+Text Encoder:
+
+bert-base
+
+These can be downloaded from Hugging Face or loaded automatically if using transformers.
+
 Pre-training Datasets
 
-COCO: Download from https://cocodataset.org/#download
-Visual Genome (VG): Download from https://visualgenome.org/api/v0/api_home.html
-Conceptual Captions (CC): Download from https://ai.google.com/research/ConceptualCaptions/download
-SBU Captions:
-Obtain URLs from the SBU Captions dataset
-Use img2dataset to download images from the URLs
-
-
-CC12M:
-Download the dataset from cc12m.tsv
-Use img2dataset to download images from the TSV file
-
-
+| Dataset                  | Download Link                                                                  |
+| ------------------------ | ------------------------------------------------------------------------------ |
+| COCO                     | [cocodataset.org](https://cocodataset.org/#download)                           |
+| Visual Genome (VG)       | [visualgenome.org](https://visualgenome.org/api/v0/api_home.html)              |
+| Conceptual Captions (CC) | [google research](https://ai.google.com/research/ConceptualCaptions/download)  |
+| SBU Captions             | [Use `img2dataset`](https://github.com/rom1504/img2dataset) with provided URLs |
+| CC12M                    | Use `img2dataset` on `cc12m.tsv`                                               |
 
 Downstream Task Datasets
-
-VQA: Download from https://visualqa.org/download.html
-NLVR2: Download from https://lil.nlp.cornell.edu/nlvr/
-Flickr Image Dataset: Download from https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset
+| Task            | Dataset                               | Download Link                                                             |
+| --------------- | ------------------------------------- | ------------------------------------------------------------------------- |
+| VQA             | Visual Question Answering             | [visualqa.org](https://visualqa.org/download.html)                        |
+| NLVR2           | Natural Language for Visual Reasoning | [lil.nlp.cornell.edu/nlvr](https://lil.nlp.cornell.edu/nlvr/)             |
+| Image Retrieval | Flickr Image Dataset                  | [Kaggle](https://www.kaggle.com/datasets/hsankesara/flickr-image-dataset) |
 
 Dataset Setup
+Download raw images from the dataset links above.
 
-Download raw images from the respective websites.
-Download the provided JSON files containing image paths and captions.
-Load the JSON files into the pretrain.py script for pre-training.
+Retrieve and use the provided .json files containing:
+
+Image paths
+
+Captions or textual descriptions
+
+Ensure correct dataset paths are specified inside the pretrain.py script.
 
 Running the Code
 Pre-training
+python pretrain.py --config configs/pretrain.yaml
+Ensure all datasets and pre-trained models are in place.
 
-Setup: Ensure all datasets and pre-trained models are downloaded.
-Load Datasets: Input the JSON files with image paths and captions into the pretrain.py script.
-Run Pre-training: Execute the pretrain.py script to train the model.
-Checkpoints: Evaluate model performance using zero-shot and fine-tuned results on COCO and Flickr30 datasets.
+Load dataset JSON files into the script.
 
-Downstream Tasks
+Training checkpoints will be automatically saved and can be used for downstream tasks.
 
-Evaluation Scripts: Use VQA.py and NLVR2.py to evaluate performance on downstream tasks.
-Datasets: Run evaluations using COCO and Flickr30 datasets.
-Performance Improvement: Enhance accuracy and cross-modal alignment by running the pretrain.py script with the provided fine-tuning code.
+Downstream Task Evaluation
+VQA: python VQA.py
+
+NLVR2: python NLVR2.py
+
+These scripts use the pre-trained model checkpoints to assess task-specific performance.
 
 Notes
+Verify all paths and configuration in YAML or JSON files before execution.
 
-Ensure all dependencies are installed and compatible with your Python environment.
-Verify dataset paths in the JSON files before running the scripts.
-For optimal performance, use a GPU with CUDA support for cudatoolkit.
+For optimal performance, use a GPU-enabled machine with CUDA.
+
+Fine-tuning scripts are included to further improve accuracy and cross-modal alignment.
+
+License
+This project is released under the MIT License. See the LICENSE file for details.
+
+
