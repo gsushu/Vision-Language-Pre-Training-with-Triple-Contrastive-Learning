@@ -1,0 +1,22 @@
+test_file: ['data/vlue_released/nlvr2_vlue_test.json']
+image_root: 'images/marvl/'
+
+
+vision_config: 'configs/config_swinB_384.json'
+
+use_clip_vit: False
+
+
+use_swin: True
+image_res: 384
+patch_size: 32
+
+
+
+use_roberta: False
+text_config: 'configs/config_bert.json'  
+text_encoder: 'data/bert-base-uncased'  
+
+
+
+batch_size: 20  
